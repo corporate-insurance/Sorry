@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I’m sorry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1ecf5;--card:#fbf9fd;--ink:#2b2140;--soft:#6a5f80;--accent:#c4476b;--accent-ink:#fff;--line:#ded5ea;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171320;--card:#211b2e;--ink:#f1ebfa;--soft:#b5a9cc;--accent:#e86b8e;--accent-ink:#1a1220;--line:#372d4b}}
+:root[data-theme="dark"]{--bg:#171320;--card:#211b2e;--ink:#f1ebfa;--soft:#b5a9cc;--accent:#e86b8e;--accent-ink:#1a1220;--line:#372d4b}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:Lora,Georgia,'Times New Roman',serif;line-height:1.75;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+main{width:100%;max-width:520px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:40px 28px 32px}
+h1{font-family:Caveat,'Segoe Script','Bradley Hand',cursive;font-weight:600;font-size:clamp(3.4rem,16vw,5rem);line-height:1;margin:0 0 20px;color:var(--accent)}
+h1 span{display:inline-block;clip-path:inset(0 100% 0 0);animation:write 1.6s ease-out .2s forwards}
+@keyframes write{to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){h1 span{animation:none;clip-path:none}}
+p{margin:0 0 16px;font-size:1.05rem}
+.sig{color:var(--soft);margin-top:24px}
+.ask{border-top:1px solid var(--line);margin-top:28px;padding-top:24px}
+.ask p{color:var(--soft);font-size:1rem}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+button{font:inherit;font-size:1rem;cursor:pointer;border-radius:999px;padding:12px 20px;border:1.5px solid var(--accent);background:transparent;color:var(--accent)}
+button.main{background:var(--accent);color:var(--accent-ink)}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+#reply{margin-top:20px;font-size:1.1rem;color:var(--ink);min-height:1.5em}
+#stage{position:relative;margin-top:20px;min-height:110px;text-align:center;overflow:hidden}
+.gif{display:inline-block;position:relative;font-size:5rem;line-height:1.2}
+.bounce{animation:bounce .8s ease-in-out infinite}
+.shake{animation:shake .35s linear infinite}
+.sway{animation:sway 1.4s ease-in-out infinite}
+.pulse{animation:pulse 1s ease-in-out infinite}
+.tilt{animation:tilt 1.2s ease-in-out infinite}
+.tear{position:absolute;top:58%;font-size:1.6rem;animation:fall 1s ease-in infinite}
+.heart{position:absolute;bottom:-10px;font-size:1.8rem;animation:rise 2.6s ease-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes sway{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+@keyframes tilt{0%,100%{transform:rotate(0)}30%{transform:rotate(-14deg)}70%{transform:rotate(14deg)}}
+@keyframes fall{0%{transform:translateY(0);opacity:1}100%{transform:translateY(46px);opacity:0}}
+@keyframes rise{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-120px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.gif,.tear,.heart{animation:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1><span>I’m sorry</span></h1>
+  <p>I’ve been thinking about what happened, and I know I hurt you. That was never what I wanted, and I’m truly sorry.</p>
+  <p>I’m not here to make excuses. I should have listened better, and I should have thought about how you would feel. You matter to me, and I want to do better.</p>
+  <p>Whenever you’re ready to talk, I’ll be here, and I’ll listen.</p>
+  <p class="sig">Always yours, with all my heart.</p>
+  <div class="ask">
+    <p>Can you tell me where we stand?</p>
+    <div class="row">
+      <button class="main" id="yes" type="button">I forgive you</button>
+      <button id="time" type="button">I need some time</button>
+    </div>
+    <div id="stage" aria-hidden="true"></div>
+    <div id="reply" role="status" aria-live="polite"></div>
+  </div>
+</main>
+<script>
+var r=document.getElementById('reply'),stage=document.getElementById('stage'),timeBtn=document.getElementById('time'),n=0;
+var scenes=[
+{e:'🥺',c:'bounce',t:'Pretty please? I’m really, truly sorry.'},
+{e:'😭',c:'cry',t:'I’m crying here… I miss you.'},
+{e:'🐶',c:'tilt',t:'Look at this sad puppy. That’s me right now.'},
+{e:'💔',c:'shake',t:'My heart is breaking without you.'},
+{e:'🧸',c:'sway',t:'Even the teddy bear says sorry.'},
+{e:'🙏',c:'bounce',t:'Please, please, please forgive me?'},
+{e:'🥹',c:'pulse',t:'I’ll be so good. I promise.'}
+];
+function show(e,c){stage.textContent='';var d=document.createElement('div');d.className='gif '+(c==='cry'?'bounce':c);d.textContent=e;if(c==='cry'){[28,50,72].forEach(function(p,k){var t=document.createElement('span');t.className='tear';t.textContent='💧';t.style.left=p+'%';t.style.animationDelay=(k*0.3)+'s';d.appendChild(t);});}stage.appendChild(d);}
+timeBtn.addEventListener('click',function(){var s=scenes[n%scenes.length];n++;show(s.e,s.c);r.textContent=s.t;timeBtn.textContent='I still need time';});
+document.getElementById('yes').addEventListener('click',function(){stage.textContent='';for(var i=0;i<14;i++){var h=document.createElement('span');h.className='heart';h.textContent=i%2?'💖':'💗';h.style.left=(4+Math.random()*88)+'%';h.style.animationDelay=(Math.random()*2)+'s';stage.appendChild(h);}timeBtn.hidden=true;r.textContent='Thank you. That means everything to me. ♥';});
+</script>
+</body>
+</html>
